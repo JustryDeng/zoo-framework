@@ -313,19 +313,6 @@
                 <version>${seata.version}</version>
             </dependency>
 
-            <!-- sentinel -->
-            <dependency>
-                <groupId>com.alibaba.csp</groupId>
-                <artifactId>sentinel-core</artifactId>
-                <version>${sentinel.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.alibaba.csp</groupId>
-                <artifactId>sentinel-annotation-aspectj</artifactId>
-                <version>${sentinel.version}</version>
-            </dependency>
-
             <!--
                  micrometer （actuator prometheus版本号）
                  注： 此依赖的版本号需要根据对应的spring-boot版本查找：
