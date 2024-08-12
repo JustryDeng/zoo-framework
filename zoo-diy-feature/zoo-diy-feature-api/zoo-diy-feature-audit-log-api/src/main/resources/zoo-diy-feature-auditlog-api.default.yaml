@@ -1,0 +1,31 @@
+zoo:
+  guide:
+    diy:
+      zoo-audit-log:
+        openapi:
+          order: 1000
+          name: "zoo-diy-feature-audit-log-api"
+          instruction: |-
+            1.此组件提供基于springdoc openapi3的自动审计日志支持
+          manual: |-
+            1.使用此组件时，需要用实现com.ideaaedi.zoo.diy.feature.auditlog.api.spi.AuditLogRecorder类
+            2.此组件会自动扫描被openapi3的@Operation注解标注了的方法，进行操作日志记录
+              @Operation(summary = "测试")
+              @RequestMapping("test")
+              public Result<String> test(String name) {
+                  return Result.success(RandomUtil.randomString(20));
+              }
+            3. 在生成AuditInfoDTO对象给其赋请求参数、响应结果的值时，你可以通过'zoo.audit-log.ignore-request-types'或
+               'zoo.audit-log.ignore-response-types'来设置忽略哪些类型的赋值，该值会被占位符'<Hit-Ignore-Response-Type>'顶替
+            zoo:
+              audit-log:
+                ignore-request-types:
+                  - jakarta.servlet.http.HttpServletRequest
+                  - jakarta.servlet.http.HttpServletResponse
+                  - org.springframework.web.multipart.MultipartFile
+                  - '[B' # 忽略 byte[]
+                ignore-response-types:
+                  - '[B' # 忽略 byte[]
+          contacts:
+            - name: "作者邮箱"
+              value: "13548417409@163.com"

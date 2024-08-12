@@ -1,0 +1,50 @@
+zoo:
+  guide:
+    diy:
+      zoo-mybatis-plus:
+        order: 10
+        name: "zoo-diy-artifact-mybatis-plus"
+        instruction: |-
+          1.整合mybatis-plus
+          2.设置一些常用配置（详见manual部分）
+          3.并作了一定增强（详见manifests部分）
+        manual: |-
+          1.引入此组件后，一般需要根据自身情况，作相应mybatis-plus配置。如：
+          mybatis-plus:
+            global-config:
+              db-config:
+                logic-delete-value: 1 # 指定逻辑删除值
+                logic-not-delete-value: 0 # 指定逻辑未删除值
+          2.此组件会注册一个默认的MetaObjectHandler和一个默认的OperatorIdProvider，MetaObjectHandler用来在新增数据时会填充
+            createdBy（Long类型）、createdAt（LocalDateTime类型）、updatedBy（Long类型）、updatedAt（LocalDateTime类型）字段；
+            修改数据时，会填充updatedBy（Long类型）、updatedAt（LocalDateTime类型）字段。
+            createdBy、updatedBy字段的值，会从spring容器中获取OperatorIdProvider，然后调用getOperatorId()方法获取操作者；
+            createdAt、updatedAt字段的值，默认取当前值。
+            注：如果使用系统默认的OperatorIdProvider的话，那么最好向spring中注册一个AuthUrlWhitelist实现类，
+               如果获取不到当前登录用户的话，会判断是否命中url白名单，如果命中了，操作者id会记录为0；如果没命中，那
+               么操作者id返回null，可能会引发后续非空报错
+        manifests:
+          - "BaseMapper增加方法forceSelectById：忽略逻辑删除字段，byId查询"
+          - "BaseMapper增加方法forceSelectOne：忽略逻辑删除字段，selectOne查询"
+          - "BaseMapper增加方法forceSelectBatchIds：忽略逻辑删除字段，byIds查询"
+          - "BaseMapper增加方法forceSelectList：忽略逻辑删除字段，selectList查询"
+          - "BaseMapper增加方法forceExists：忽略逻辑删除字段，exists判断"
+          - "BaseMapper增加方法forceSelectCount：忽略逻辑删除字段，selectCount查询"
+          - "BaseMapper增加方法forceSelectPage：忽略逻辑删除字段，selectPage查询"
+          - "BaseMapper增加方法forceDeleteById：忽略逻辑删除字段，byId删除"
+          - "BaseMapper增加方法forceDeleteBatchIds：忽略逻辑删除字段，byIds删除"
+          - "BaseMapper增加方法forceDelete：忽略逻辑删除字段，wrapper删除"
+        contacts:
+          - name: "作者邮箱"
+            value: "13548417409@163.com"
+        links:
+          - name: "官网"
+            value: "https://baomidou.com/"
+          - name: "Github"
+            value: "https://github.com/baomidou/mybatis-plus"
+
+
+mybatis-plus:
+  global-config:
+    # 不打印banner
+    banner: false

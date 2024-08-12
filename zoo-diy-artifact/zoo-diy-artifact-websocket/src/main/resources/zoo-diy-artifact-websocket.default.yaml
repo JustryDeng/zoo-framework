@@ -1,0 +1,74 @@
+zoo:
+  guide:
+    diy:
+      zoo-websocket:
+        order: 50
+        name: "zoo-diy-artifact-websocket"
+        instruction: |-
+          1.此组件提供websocket能力支持
+          2.此组件支持基于redis的分布式"共享session"方案，无需任何操作，只需在 项目中引入redis即可自动生效
+            以配置spring.data.redis.host为识别源
+        manual: |-
+          引入此组件后，你还需要作以下步骤：
+          1(可选).配置websocket
+          zoo:
+            # websocket配置
+            websocket:
+              # 限制文本消息的大小。单位：字节(B)
+              max-session-idle-timeout: 10485760 # 10MB
+              # 限制二进制消息的大小。单位：字节(B)
+              max-text-message-buffer-size: 20971520 # 20MB
+              # 设置会话的最大空闲超时时长。单位：毫秒
+              max-binary-message-buffer-size: 3600000 # 60分钟
+          
+          2(可选).如果你想在ws握手时进行token验证，你需要实现WebSocketTokenValidator并注册
+          此时，前端的代码需要通过子协议传递token值，如：websocket = new WebSocket("ws://127.0.0.1:8080/demo/123", "your-token");
+          
+          3.定义websocket服务端点，并设置获取握手时请求头
+          @ServerEndpoint(value = "/websocket/document", configurator = KeepWebSocketHeaders.class)
+          
+          4(可选).如果配置有nginx之类的负载工具，那么可能需要作相应nginx.conf配置，示例：
+          upstream websocket_server {
+              server 127.0.0.1:8080;
+          }
+          server {
+              listen       80;
+              listen       443 ssl;
+              server_name www.idea-aedi.com;
+              error_page   500 502 503 504  /50x.html;
+              location = /50x.html {
+                  root   html;
+              }
+              # ssl证书
+              ssl_certificate cert/idea-aedi.com.pem; #证书
+              ssl_certificate_key cert/idea-aedi.com.key; # 私钥
+              ssl_session_timeout 5m;
+              ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+              # 配置nginx转发ws
+              location ^~/websocket {
+                  proxy_set_header   X-Real-IP $remote_addr;
+                  proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+                  proxy_set_header   Host      $http_host;
+                  proxy_set_header   X-NginX-Proxy true;
+                  # 按照统一前缀转发。 这里即：凡是/websocket...开头的请求，同一转发至 http://${websocket_server}/websocket...
+                  proxy_pass         http://websocket_server;
+                  proxy_http_version         1.1;
+                  proxy_set_header Upgrade $http_upgrade;
+                  proxy_set_header Connection "upgrade";
+                  proxy_redirect off;
+                  proxy_read_timeout 86400s;
+                  proxy_send_timeout 86400s;
+              }
+          }
+        contacts:
+          - name: "作者邮箱"
+            value: "13548417409@163.com"
+
+  # websocket配置
+  websocket:
+    # 限制文本消息的大小。单位：字节(B)
+    max-session-idle-timeout: 10485760 # 10MB
+    # 限制二进制消息的大小。单位：字节(B)
+    max-text-message-buffer-size: 20971520 # 20MB
+    # 设置会话的最大空闲超时时长。单位：毫秒
+    max-binary-message-buffer-size: 3600000 # 60分钟

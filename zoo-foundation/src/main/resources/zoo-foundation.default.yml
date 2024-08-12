@@ -1,0 +1,4 @@
+zoo:
+  guide:
+    enable: true
+    show-detail: false

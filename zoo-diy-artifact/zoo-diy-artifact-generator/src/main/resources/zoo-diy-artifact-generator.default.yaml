@@ -1,0 +1,46 @@
+zoo:
+  guide:
+    diy:
+      zoo-generator:
+        order: 10000
+        name: "zoo-diy-artifact-generator"
+        instruction: |-
+          1.此组件提供数据库文档、代码等自动生成能力
+        manual: |-
+          1（可选，因为有默认配置）.引入此组件后，可根据自身情况，作相应配置：
+          zoo:
+            generator:
+              # 数据库文档生成器
+              database-doc:
+                db-jdbc-url: jdbc:mysql://localhost:3306/demo?serverTimezone=GMT%2B8&useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+                db-username: root
+                db-password: root
+                db-driver-class-name: com.zaxxer.hikari.HikariDataSource
+              # 代码生成器
+              java-curd-code::
+                db-jdbc-url: jdbc:mysql://localhost:3306/demo?serverTimezone=GMT%2B8&useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+                db-username: root
+                db-password: root
+          2.请直接使用门面工具类操作代码
+        contacts:
+          - name: "作者邮箱"
+            value: "13548417409@163.com"
+        links:
+          - name: "数据库表生成器"
+            value: "https://gitee.com/leshalv/screw"
+          - name: "Java CURD代码生成器"
+            value: "https://baomidou.com/guides/new-code-generator/"
+
+  # 生成器相关配置
+  generator:
+    # 数据库文档生成器
+    database-doc:
+      db-jdbc-url: ${spring.datasource.url:${spring.datasource.dynamic.datasource.master.url:}}
+      db-username: ${spring.datasource.username:${spring.datasource.dynamic.datasource.master.username:}}
+      db-password: ${spring.datasource.password:${spring.datasource.dynamic.datasource.master.password:}}
+      db-driver-class-name: ${spring.datasource.driver-class-name:${spring.datasource.dynamic.datasource.master.driver-class-name:}}
+    # 代码生成器
+    java-curd-code:
+      db-jdbc-url: ${spring.datasource.url:${spring.datasource.dynamic.datasource.master.url:}}
+      db-username: ${spring.datasource.username:${spring.datasource.dynamic.datasource.master.username:}}
+      db-password: ${spring.datasource.password:${spring.datasource.dynamic.datasource.master.password:}}

@@ -1,0 +1,92 @@
+zoo:
+  guide:
+    diy:
+      zoo-bpmn:
+        flowable:
+          order: 1010
+          name: "zoo-diy-feature-bpmn-by-flowable"
+          instruction: |-
+            此组件提供基于flowable的工作流引擎支持。
+            Flowable中相关核心概念说明：
+            1.ProcessInstance（流程实例）是以ProcessDefinition（流程定义）为模板，创建的具体流程；
+              一个ProcessDefinition（流程定义）可以对应多个ProcessInstance（流程实例）；
+              一个ProcessInstance（流程实例）可以对应多个Execution（执行实例）；
+              一个Execution（执行实例）可以对应多个流程节点（节点按类型可分为：活动Activity、事件Event、网关Gateway）
+            2.我们常用的各种任务，属于活动Activity的子集；除了任务Task外，活动的子集还有子流程SubProcess、调用CallActivity
+            3.任务（如：用户任务UserTask）支持附加评论、附件等功能；这些评论和附件等可以用来说明原因、提供资料、记录处理意见、交流信息或提供反馈等，有助于工作协同和流程审计。
+          manual: |-
+            1.如何绘制工作流程文件？
+            方案1. flowable自7开始，已经不提供单独部署的相关ui包了， 官方推荐直接去他的官网设计流程： 在线流程设计: https://trial.flowable.com/design/
+            方案2. 利用bpmn-js绘制。这是一个基于Bpmn 2.0的前端工作流展示和绘制工具。
+            方案3. 虽然官方不提供对应新版本的ui包了，但是低版本的流程设计器设计出来的流程（xml文件）， 也是可以直接导入到新版本的flowable中的。
+                   所以如果你不方便使用官方的在线流程设计， 那么可以尝试使用低版本的ui包在本地设计
+                   方式a：直接启动flowable-spring-boot-starter-ui-modeler（如：zoo-example/zoo-example-flowable-ui），然后
+                         访问{地址:端口}，并使用默认账密admin/test登入，开始设计
+                   方式b：直接 docker run -d --name flowable-ui-modeler -p 8080:8080 flowable/flowable-ui:6.8.0
+                         启动后，访问/flowable-ui路径，并使用默认账密admin/test登入，开始设计
+            方案4. 使用idea的Flowable BPMN Visualizer插件进行绘制或修改。
+                   第一步：新建一个xxx.bpmn20.xml文件
+                   第二步：放置bpmn文件标识，在里面设置你的流程基础信息
+                   <?xml version="1.0" encoding="UTF-8"?>
+                   <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                                xmlns:flowable="http://flowable.org/bpmn"
+                                xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                                xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+                                xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+                                typeLanguage="http://www.w3.org/2001/XMLSchema"
+                                expressionLanguage="http://www.w3.org/1999/XPath"
+                                targetNamespace="http://www.flowable.org/processdef"
+                                exporter="Flowable Open Source Modeler"
+                                exporterVersion="6.8.0">
+                       <process id="Your_Process_id" name="你的流程名称" isExecutable="true">
+                           <!-- 这里放置您的流程id，流程名称 -->
+                       </process>
+                       <!-- 
+                           提示：流程处理解析只需要process就够了，这里的bpmndi是给页面展示设计使用的，
+                                 设计的最终结果还是存储在process中的
+                       -->
+                       <bpmndi:BPMNDiagram id="BPMNDiagram_Your_Process_id">
+                           <bpmndi:BPMNPlane id="BPMNPlane_Your_Process_id" bpmnElement="Your_Process_id">
+                               <!-- 这里是图形信息，由BPMN Visualizer自动生成或手动调整 -->
+                               <!-- 这里放置您的BPMNDiagram id ，BPMNPlane id 和 bpmnElement流程id -->
+                           </bpmndi:BPMNPlane>
+                       </bpmndi:BPMNDiagram>
+                   </definitions>
+                   第三步：右击该文件，选择View BPMN(Flowable) Diagram进行创建或编辑
+                          注：进入画布后，右击画布出现工作流相关元素
+            方案5. 其它BPMN2.0 流程设计工具，如Camunda Modeler或Signavio等
+            方案n. ......
+            2.如何观察flowable的相关SQL？
+            logging:
+              level:
+                # 将所有实现了org.flowable.common.engine.impl.persistence.entity.Entity的类的日志都打印出debug级别，即可观察到数据库操作日志
+                org.flowable.variable.service.impl.persistence.entity: debug
+                org.flowable.eventsubscription.service.impl.persistence.entity: debug
+                org.flowable.engine.impl.persistence.entity: debug
+                org.flowable.batch.service.impl.persistence.entity: debug
+                org.flowable.eventregistry.impl.persistence.entity: debug
+                org.flowable.identitylink.service.impl.persistence.entity: debug
+                org.flowable.entitylink.service.impl.persistence.entity: debug
+                org.flowable.app.engine.impl.persistence.entity: debug
+                org.flowable.common.engine.impl.persistence.entity: debug
+                org.flowable.idm.engine.impl.persistence.entity: debug
+                org.flowable.dmn.engine.impl.persistence.entity: debug
+                org.flowable.task.service.impl.persistence.entity: debug
+                org.flowable.cmmn.engine.impl.persistence.entity: debug
+                org.flowable.job.service.impl.persistence.entity: debug
+          contacts:
+            - name: "作者邮箱"
+              value: "13548417409@163.com"
+          links:
+            - name: "Github"
+              value: "https://github.com/flowable/flowable-engine"
+            - name: "官网首页"
+              value: "https://www.flowable.org/"
+            - name: "官网文档"
+              value: "https://www.flowable.com/open-source/docs/oss-introduction"
+            - name: "在线流程设计"
+              value: "https://trial.flowable.com/design/"
+            - name: "spring-boot集成flowable指导"
+              value: "https://www.flowable.com/open-source/docs/bpmn/ch05a-Spring-Boot#compatibility"

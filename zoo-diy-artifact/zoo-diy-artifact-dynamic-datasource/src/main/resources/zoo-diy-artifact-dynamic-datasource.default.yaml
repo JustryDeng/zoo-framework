@@ -1,0 +1,14 @@
+zoo:
+  guide:
+    diy:
+      zoo-dynamic-datasource:
+        order: 110
+        name: "zoo-diy-artifact-dynamic-datasource"
+        instruction: |-
+          1.此组件提供多数据源能力支持
+        contacts:
+          - name: "作者邮箱"
+            value: "13548417409@163.com"
+        links:
+          - name: "官网"
+            value: "https://gitee.com/baomidou/dynamic-datasource-spring-boot-starter"

@@ -1,0 +1,49 @@
+zoo:
+  guide:
+    diy:
+      zoo-reqresp-encdec-springmvc:
+        order: 1040
+        name: "zoo-diy-feature-reqresp-encdec-by-aspect"
+        instruction: |-
+          1.此组件提供对接口响应数据进行加的能力支持
+          2.此组件提供对接口请求数据进行解密的能力支持（仅限post、put中的请求体数据）
+        manual: |-
+          引入此组件后，你需要根据自身情况进行相关配置
+          zoo:
+            # 请求响应加解密配置
+            req-resp-enc-dec:
+              # 响应加密配置
+              resp-encrypt:
+                enable: true
+                aes-key: '0000000000000000'
+                #order: 
+                #includeHosts:
+                #  - '192.168.0.*'
+                #  - '192.168.1.*'
+                #exclude-hosts:
+                #  - '192.168.0.135'
+                #  - '192.168.1.137'
+                #include-paths:
+                #  - '/api/v1/**'
+                #  - '/api/v2/**'
+                #exclude-paths:
+                #  - '/api/v1/login'
+                #  - '/api/v2/login'
+                #include-exist-resp-headers:
+                #  - 'biz-data-encrypted'
+                #exclude-exist-resp-headers:
+                #  - 'Content-disposition'
+              # 请求解密配置
+              req-decrypt:
+                enable: true
+                aes-key: '0000000000000000'
+                #order: 
+                #include-hosts:
+                #exclude-hosts:
+                #include-paths:
+                #exclude-paths:
+                #include-exist-req-headers:
+                #exclude-exist-req-headers:
+        contacts:
+          - name: "作者邮箱"
+            value: "13548417409@163.com"

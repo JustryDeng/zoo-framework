@@ -1,0 +1,50 @@
+zoo:
+  guide:
+    diy:
+      zoo-litefeature-api:
+        order: 1090
+        name: "zoo-diy-feature-lite-feature-api"
+        instruction: |-
+          1.此组件提供一些小功能能力支持
+        manual: |-
+          引入此组件后，你可以按需启用小功能。使用方式如：
+          @EnableFeature(
+              /*
+               * 进出口日志记录。使用步骤：
+               * 1. 这里设置为true （会扫描includePrefixes包下的所有以Controller结尾的类，并记录进出日志）
+               * 2（可选）. 你也可以使用@RecordParameters和ParameterRecorder来主动标记或排除includePrefixes包下哪些方法需要记录进出日志
+               */
+              enableParameterRecorder = @ParameterRecorder(...),
+              /*
+               * 请求防止重复。使用步骤：
+               * 1. 这里设置为true
+               * 2. 实现 AntiDuplicateExecutor （如果你是用zoo-diy-feature-lite-feature-by-cs作为实现的话）
+               * 3. 在需要放重复提交的方法上使用@AntiDuplication注解
+               */
+              enableAntiDuplicate = true,
+              /*
+               * 分布式锁。使用步骤：
+               * 1. 这里设置为true
+               * 2. 引入缓存组件org.redisson:redisson并注册RedissonClient （如果你是用zoo-diy-feature-lite-feature-by-cs作为实现的话）
+               * 3. 使用分布式锁
+               *    使用方式一：使用门面工具类LockFaceUtil
+               *    使用方式二：使用注解@Lock
+               */
+              enableRedisLockAnno = true,
+              /*
+               * 注入增强。使用步骤：
+               * 1. 这里设置为true
+               * 2. 使用分布式锁
+               *    使用方式一：使用工具类. ExtAutowiredInjector.inject(yourObj)
+               *    使用方式二：直接继承. YourObj extends ExtAutowiredInjector
+               */
+              enableExtAutowiredInjector = true
+          )
+          @SpringBootApplication
+          public class DemoApplication {
+              ...
+          }
+
+    contacts:
+      - name: "作者邮箱"
+        value: "13548417409@163.com"

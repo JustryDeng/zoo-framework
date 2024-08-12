@@ -1,0 +1,2 @@
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com.ideaaedi.zoo.diy.feature.bpmn.impl.flowable.processor.ZooBpmnByFlowableEnvProcessor

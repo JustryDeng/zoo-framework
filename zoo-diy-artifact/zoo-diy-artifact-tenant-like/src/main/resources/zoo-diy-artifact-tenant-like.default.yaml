@@ -1,0 +1,27 @@
+zoo:
+  guide:
+    diy:
+      zoo-tenant-like:
+        order: 20
+        name: "zoo-diy-artifact-tenant-like"
+        instruction: |-
+          1.此组件提供基于mybatis-plus的多租户能力支持
+        manual: |-
+          1. 租户字段tenant
+             此组件定义的租户列为tenant，字段类型为字符串（而非mybatis-plus默认的整数类型的tenant_id）
+             注：如果你的数据库租户字段名为tenant_id，那么可以修改BaseConstant.TENANT_PROPERTY_NAME的值为tenantId
+          2.此组件多租户的隔离实现，基于like，而非基于equals，故此组件不仅支持租户横向隔离，还支持租户内数据层级纵向隔离
+          3.启动多租户组件后，需要在进行数据库查询前，通过ZooContext.setUserDataScope设置当前用户的数据域信息（租户信息）
+        contacts:
+          - name: "作者邮箱"
+            value: "13548417409@163.com"
+        links:
+          - name: "参考实现"
+            value: "https://baomidou.com/plugins/tenant/"
+  tenant:
+    # 设置从第二层级开始，属于业务租户值
+    biz-tenant-level: 2
+
+logging:
+  level:
+    com.ideaaedi.zoo.diy.artifact.tenantlike.tenant.LikeTenantLineInnerInterceptor: info

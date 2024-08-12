@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.idea-aedi.zoo</groupId>
+        <artifactId>zoo-framework</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>zoo-diy-artifact</artifactId>
+    <packaging>pom</packaging>
+
+    <name>starter</name>
+    <url>http://maven.apache.org</url>
+    <modules>
+        <module>zoo-diy-artifact-mybatis-plus</module>
+        <module>zoo-diy-artifact-auth-sa-token</module>
+        <module>zoo-diy-artifact-logging-micrometer</module>
+        <module>zoo-diy-artifact-apidoc-knife4j</module>
+        <module>zoo-diy-artifact-tenant-like</module>
+        <module>zoo-diy-artifact-websocket</module>
+        <module>zoo-diy-artifact-sse</module>
+        <module>zoo-diy-artifact-liteflow</module>
+        <module>zoo-diy-artifact-openfeign</module>
+        <module>zoo-diy-artifact-grayscale-aspect</module>
+        <module>zoo-diy-artifact-generator</module>
+        <module>zoo-diy-artifact-shardingsphere</module>
+        <module>zoo-diy-artifact-dynamic-datasource</module>
+    </modules>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/**</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+    </build>
+</project>

@@ -1,0 +1,21 @@
+zoo:
+  guide:
+    diy:
+      zoo-msg-api:
+        order: 1070
+        name: "zoo-diy-feature-msg-api"
+        instruction: |-
+          1.此组件提供消息门面能力支持
+        manual: |-
+          引入此组件后，你可以按需作相关配置。如：
+          zoo:
+            msg:
+              sms:
+                # 指定短信的默认发送器
+                default-sender-id: yourDefaultSmsSenderId
+              mail:
+                # 指定邮箱的默认发送器
+                default-sender-id: yourDefaultMailSenderId
+        contacts:
+          - name: "作者邮箱"
+            value: "13548417409@163.com"

@@ -1,0 +1,15 @@
+zoo:
+  guide:
+    diy:
+      zoo-field-perm-openapi:
+        order: 1030
+        name: "zoo-diy-feature-field-perm-by-openapi"
+        instruction: |-
+          1.此组件提供接口字段权限能力支持
+        manual: |-
+          引入此组件后，你需要
+          1. 实现MethodArgFieldRepositoryService
+          2. 在需要进行字段权限的方法上添加@FieldPermission注解
+        contacts:
+          - name: "作者邮箱"
+            value: "13548417409@163.com"
