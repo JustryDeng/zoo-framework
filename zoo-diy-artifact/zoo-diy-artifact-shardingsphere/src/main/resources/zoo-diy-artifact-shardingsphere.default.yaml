@@ -1,0 +1,16 @@
+zoo:
+  guide:
+    diy:
+      zoo-shardingsphere:
+        order: 100
+        name: "zoo-diy-artifact-shardingsphere"
+        instruction: |-
+          1.此组件提供基于shardingsphere的分库分表能力支持
+        contacts:
+          - name: "作者邮箱"
+            value: "13548417409@163.com"
+        links:
+          - name: "官网"
+            value: "https://shardingsphere.apache.org/document/current/cn/overview/"
+          - name: "bookstack中文文档"
+            value: "https://www.bookstack.cn/read/shardingsphere-5.5.0-zh/SUMMARY.md"

@@ -1,0 +1,56 @@
+zoo:
+  guide:
+    diy:
+      zoo-openfeign:
+        order: 80
+        name: "zoo-diy-artifact-openfeign"
+        instruction: |-
+          1.此组件提供声明式客户端open feign能力支持
+          2.除了@FeignClient注解外，此组件额外提供了@OnceFeignClient注解使用支持
+        manual: |-
+          1（必须）. 引入此组件后，你需要通过@EnableZooFeignClients启用feign客户端
+          2（可选）. 引入此组件后，你可以根据自己情况对应配置。这是默认配置
+          # openfeign原生配置
+          spring:
+            cloud:
+              openfeign:
+                httpclient:
+                  disable-ssl-validation: true
+                  connection-timeout: 5000
+                  hc5:
+                    socket-timeout: 60
+                    socket-timeout-unit: seconds
+          # openfeign 拦截器配置
+          zoo:
+            openfeign:
+              append-headers:
+                # 往请求头中追加请求头 request.setHeader("traceXd", MDC.get("traceXd"))
+                - header: traceXd # 追加的请求头
+                  value: traceXd # 请求头的值或值在source中的键
+                  source: MDC # 请求头的值
+                  #encode-value: false # 是否对最终放入请求头中的值进行url-encode
+                  #default-value:  # 默认值
+        contacts:
+          - name: "作者邮箱"
+            value: "13548417409@163.com"
+
+  # openfeign 拦截器配置
+  openfeign:
+    append-headers:
+      # 往请求头中追加请求头 request.setHeader("traceXd", MDC.get("traceXd"))
+      - header: traceXd # 追加的请求头
+        value: traceXd # 请求头的值或值在source中的键
+        source: MDC # 请求头的值
+        #encode-value: false # 是否对最终放入请求头中的值进行url-encode
+        #default-value:  # 默认值
+
+# openfeign原生配置
+spring:
+  cloud:
+    openfeign:
+      httpclient:
+        disable-ssl-validation: true
+        connection-timeout: 5000
+        hc5:
+          socket-timeout: 60
+          socket-timeout-unit: seconds

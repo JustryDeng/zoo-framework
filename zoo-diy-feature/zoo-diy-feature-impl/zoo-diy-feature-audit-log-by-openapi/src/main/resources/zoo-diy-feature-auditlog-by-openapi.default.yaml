@@ -1,0 +1,21 @@
+zoo:
+  guide:
+    diy:
+      zoo-audit-log:
+        openapi:
+          order: 1001
+          name: "zoo-diy-feature-audit-log-by-openapi"
+          instruction: |-
+            1.此组件提供基于springdoc openapi3的自动审计日志支持
+          manual: |-
+            1.使用此组件时，需要用实现com.ideaaedi.zoo.diy.feature.auditlog.api.spi.AuditLogRecorder类
+            2.此组件会自动扫描被openapi3的@Operation注解标注了的方法，进行操作日志记录
+              @Operation(summary = "测试")
+              @RequestMapping("test")
+              public Result<String> test(String name) {
+                  return Result.success(RandomUtil.randomString(20));
+              }
+            3. 如果被@Operation标注方法所在类上，有@Tag（或者对其的增强注解@ApiTag）、@Tags注解，那么在推导方法的说明时，会将这些注解的说明内容也包括进去
+          contacts:
+            - name: "作者邮箱"
+              value: "13548417409@163.com"

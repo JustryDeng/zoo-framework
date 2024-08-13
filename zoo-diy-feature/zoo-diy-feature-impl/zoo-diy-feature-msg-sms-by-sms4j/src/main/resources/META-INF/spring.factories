@@ -1,0 +1,2 @@
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com.ideaaedi.zoo.diy.feature.msg.sms.impl.sms4j.processor.ZooSmsSms4jEnvProcessor

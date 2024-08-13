@@ -1,0 +1,21 @@
+zoo:
+  guide:
+    diy:
+      zoo-litefeature-cs:
+        order: 1091
+        name: "zoo-diy-feature-lite-feature-by-cs"
+        instruction: |-
+          1.此组件提供基于com.ideaaedi:common-spring的小功能能力支持
+        manual: |-
+          1.引入此组件后，此组件将自动进行默认设置，当然你可以主动指定覆盖它：
+          zoo:
+            lite-feature:
+              lock:
+                # 设置默认的分布式锁实现提供器为CsLockSupplier
+                default-supplier-id: cs
+          2. 如果你启用了@EnableFeature(enableAntiDuplicate=true)，那么你需要实现AntiDuplicateExecutor
+          3. 如果你启用了@EnableFeature(enableRedisLockAnno=true)，那么你需要注册RedissonClient
+  lite-feature:
+    lock:
+      # 设置默认的分布式锁实现提供器为CsLockSupplier
+      default-supplier-id: cs

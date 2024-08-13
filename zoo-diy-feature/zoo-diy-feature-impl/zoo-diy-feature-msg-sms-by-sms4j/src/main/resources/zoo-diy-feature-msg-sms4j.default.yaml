@@ -1,0 +1,53 @@
+zoo:
+  guide:
+    diy:
+      zoo-msg-sms-sms4j:
+        order: 1071
+        name: "zoo-diy-feature-msg-sms-by-sms4j"
+        instruction: |-
+          1.此组件提供基于sms4j的短信能力支持
+        manual: |-
+          引入此组件后，你还需要作相关配置，示例（更多详见官网）：
+          zoo:
+            msg:
+              sms:
+                default-sender-id: SmsSenderIdA # 指定默认的短信发送器 （非必须）
+          # sms4j短信配置，示例（更多详见官网）：
+          sms:
+            config-type: yaml
+            blends:
+              alibaba: # 所属供应商
+                SmsSenderIdA: # 短信发送器唯一标识（sms4j的config-id）
+                  ###### 当前短信发送器的相关配置（更多详见官网） ######
+                  #有些称为accessKey有些称之为apiKey，也有称为sdkKey或者appId。
+                  access-key-id: 您的accessKey
+                  #称为accessSecret有些称之为apiSecret。
+                  access-key-secret: 您的accessSecret
+                  #您的短信签名
+                  signature: XXX测试签名
+                  #模板ID 如果不需要简化的sendMessage方法可以不配置
+                  template-id: 1603670
+                  # 随机权重，负载均衡的权重值依赖于此，默认为1，如不需要负载均衡可不进行配置
+                  #weight: 1
+                  #短信自动重试间隔时间  默认五秒
+                  #retry-interval: 5
+                  # 短信重试次数，默认0次不重试，如果你需要短信重试则根据自己的需求修改值即可
+                  #max-retries: 0
+                  # 当前厂商的发送数量上限，默认不设置上限
+                  #maximum: 10000
+                  # 自定义实现工厂路径
+                  #factory: {BaseProviderFactory实现类的全类名}
+        contacts:
+          - name: "作者邮箱"
+            value: "13548417409@163.com"
+        links:
+          - name: "官网"
+            value: "https://sms4j.com/"
+
+sms:
+  is-print: false
+
+spring:
+  autoconfigure:
+    exclude:
+      - org.dromara.sms4j.starter.configration.SupplierConfiguration

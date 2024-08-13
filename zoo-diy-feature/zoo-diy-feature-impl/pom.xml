@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.idea-aedi.zoo</groupId>
+        <artifactId>zoo-diy-feature</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>zoo-diy-feature-impl</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>zoo-diy-feature-audit-log-by-openapi</module>
+        <module>zoo-diy-feature-bpmn-by-flowable</module>
+        <module>zoo-diy-feature-i18n-by-spring</module>
+        <module>zoo-diy-feature-field-perm-by-openapi</module>
+        <module>zoo-diy-feature-reqresp-encdec-by-springmvc</module>
+        <module>zoo-diy-feature-file-by-xfilestorage</module>
+        <module>zoo-diy-feature-expression-engine-by-qlexpress</module>
+        <module>zoo-diy-feature-msg-sms-by-sms4j</module>
+        <module>zoo-diy-feature-msg-email-by-jakarta</module>
+        <module>zoo-diy-feature-config-by-nacos</module>
+        <module>zoo-diy-feature-lite-feature-by-cs</module>
+    </modules>
+</project>

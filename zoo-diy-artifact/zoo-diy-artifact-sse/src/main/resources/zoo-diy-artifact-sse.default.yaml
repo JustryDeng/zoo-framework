@@ -1,0 +1,13 @@
+zoo:
+  guide:
+    diy:
+      zoo-sse:
+        order: 60
+        name: "zoo-diy-artifact-sse"
+        instruction: |-
+          1.此组件提供Server-Sent Events能力支持
+          2.此组件支持基于redis的分布式"共享sse emitter"方案，无需任何操作，只需在 项目中引入redis即可自动生效
+            以配置spring.data.redis.host为识别源
+        contacts:
+          - name: "作者邮箱"
+            value: "13548417409@163.com"

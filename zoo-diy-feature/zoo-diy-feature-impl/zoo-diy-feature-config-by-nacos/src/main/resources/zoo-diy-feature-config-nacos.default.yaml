@@ -1,0 +1,49 @@
+zoo:
+  guide:
+    diy:
+      zoo-config-nacos:
+        order: 1080
+        name: "zoo-diy-feature-config-by-nacos"
+        instruction: |-
+          1.此组件提供基于nacos的配置中心能力支持
+        manual: |-
+          引入此组件后，你还需要作相关配置，如：
+          # ------------------  必须  ------------------
+          spring:
+            config:
+              import:
+                # 要导入的nacos data-id，如：demo-default.yml
+                - optional:nacos:your-nacos-data-id
+            cloud:
+              nacos:
+                config:
+                  # nacos地址及账密
+                  server-addr: localhost:8848
+                  username: nacos
+                  password: nacos
+                  # 命名空间id
+                  namespace: ns-demo
+                  # 分组
+                  group: DEFAULT_GROUP
+                  # 配置文件内容格式
+                  file-extension: yaml
+          # ------------------ 非必须 ------------------
+          logging:
+            # 在nacos上修改日志级别配置后，延迟几秒刷新日志级别
+            delay-refresh: 5
+            level:
+              com.alibaba.cloud.nacos.refresh.NacosContextRefresher: debug
+              com.alibaba.nacos.client.logging.NacosLogging: error
+        contacts:
+          - name: "作者邮箱"
+            value: "13548417409@163.com"
+        links:
+          - name: "官网"
+            value: "https://nacos.io"
+
+logging:
+  # 在nacos上修改日志级别配置后，延迟几秒刷新日志级别
+  delay-refresh: 5
+  level:
+    com.alibaba.cloud.nacos.refresh.NacosContextRefresher: debug
+    com.alibaba.nacos.client.logging.NacosLogging: error

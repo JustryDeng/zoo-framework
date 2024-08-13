@@ -1,0 +1,127 @@
+zoo:
+  guide:
+    diy:
+      zoo-knife4j:
+        order: 40
+        name: "zoo-diy-artifact-apidoc-knife4j"
+        instruction: "此组件提供基于knife4j的api文档能力，并作适应扩展"
+        manual: |-
+          1.常用注解说明：
+            1.1 com.ideaaedi.zoo.diy.artifact.apidoc.knife4j.annotation.ApiTag：API标签
+                注：@ApiTag是对@Tag的增强，支持指定order
+            1.2 io.swagger.v3.oas.annotations.Operation：API描述
+            1.3 io.swagger.v3.oas.annotations.media.Schema：描述模型记忆模型字段
+                注：当@Schema描述模型时，其将自动根据相关validation注解推断字段是否必须，当然你也可以通过requiredMode属性指定
+            1.4 com.github.xiaoymin.knife4j.annotations.ApiOperationSupport：给API排序（值越小优先级越高）
+          2.此组件会自动侦测当前项目下的api接口，需要的话你通过实现AbstractApiInfoHandler类（记得将实现类注册进spring中）来获取
+          2.此组件提供动态增加菜单的能力，你只需要实现OpenApiExtendMarkdownProvider，并注册进容器中即可
+          3.接口文档配置示例：
+          springdoc:
+            swagger-ui:
+              path: /swagger-ui.html # swagger-ui界面访问地址
+              tags-sorter:
+            api-docs:
+              path: /v3/api-docs # 接口数据访问地址
+            # API分组
+            group-configs:
+              - group: 'demo-group-a'
+                display-name: 'A组'
+                paths-to-match: '/**'
+                packages-to-scan: com.ideaaedi.zoo.example.springboot.knife4j.controller.a
+              - group: 'demo-group-b'
+                display-name: 'B组'
+                # 扫描的包
+                packages-to-scan: com.ideaaedi.zoo.example.springboot.knife4j.controller.b
+                #packages-to-exclude:
+                # 匹配的接口
+                paths-to-match: '/**'
+                #paths-to-exclude:
+            # zoo对openapi3的增强配置
+            zoo-knife4j:
+              # 文档信息
+              info:
+                title: "文档标题"
+                description: "文档描述"
+                version: "版本号"
+                termsOfService: "服务条款"
+                contact:
+                  name: "名称"
+                  email: "邮箱"
+                  url: "地址"
+              # 文档中直接访问接口时的便捷鉴权配置
+              #security-scheme:
+              #  scheme-name: defaultBearerAuth
+              #  header-key: ${sa-token.token-name:Authentication}
+              #  scheme: bearer
+              #  bearer-format: JWT
+              # java代码 与 文档中的字段类型映射
+              file-type-mappings:
+                - type: java.time.LocalTime
+                  target-type: string
+                  format: HH:mm:ss
+                - type: java.time.LocalDate
+                  target-type: string
+                  format: yyyy-MM-dd
+                - type: java.time.LocalDateTime
+                  target-type: string
+                  format: yyyy-MM-dd HH:mm:ss
+          # knife4j的增强配置，不需要增强可以不配
+          knife4j:
+            enable: true # 是否启用knife4j
+            production: false # 是否开启生产环境保护策略（这将屏蔽相关页面和api接口，详见https://doc.xiaominfo.com/docs/features/accessControl）
+            setting:
+              language: zh_cn # Ui默认显示语言. 中文(zh-CN)、英文(en-US)
+              enable-swagger-models: false # 是否显示界面中SwaggerModel功能
+              enable-filter-multipart-apis: true # RequestMapping的接口请求类型是否只显示一个指定类型（默认为POST）的接口
+              enable-footer: false # 是否显示Footer
+            basic:
+              enable: false # 是否对Knife4j提供的资源提供BasicHttp校验,保护文档
+              username: admin
+              password: 123456
+            # 加载自定义的markdown文档
+            documents:
+              - name: 响应字典 # 设置一级菜单名
+                locations: classpath:api-doc/dict/* # 指定markdown文件的位置
+                group: 'A组' # 填${springdoc.group-configs[x].display-name}对应值，表示将本菜单展示在哪个分组下
+              - name: 常见问题
+                locations: classpath:api-doc/faq/*
+                group: 'B组'
+        contacts:
+          - name: "作者邮箱"
+            value: "13548417409@163.com"
+        links:
+          - name: "官网"
+            value: "https://doc.xiaominfo.com/docs/quick-start#spring-boot-3"
+          - name: "文档增强配置"
+            value: "https://doc.xiaominfo.com/docs/features/enhance"
+
+# zoo对openapi3的增强配置
+springdoc:
+  zoo-knife4j:
+    # 文档信息
+    #info:
+    #  title: "文档标题"
+    #  description: "文档描述"
+    #  version: "版本号"
+    #  termsOfService: "服务条款"
+    #  contact:
+    #    name: "名称"
+    #    email: "邮箱"
+    #    url: "地址"
+    # 文档中直接访问接口时的便捷鉴权配置
+    #security-scheme:
+    #  scheme-name: defaultBearerAuth
+    #  header-key: ${sa-token.token-name:Authentication}
+    #  scheme: bearer
+    #  bearer-format: JWT
+    # java代码 与 文档中的字段类型映射
+    file-type-mappings:
+      - type: java.time.LocalTime
+        target-type: string
+        format: HH:mm:ss
+      - type: java.time.LocalDate
+        target-type: string
+        format: yyyy-MM-dd
+      - type: java.time.LocalDateTime
+        target-type: string
+        format: yyyy-MM-dd HH:mm:ss

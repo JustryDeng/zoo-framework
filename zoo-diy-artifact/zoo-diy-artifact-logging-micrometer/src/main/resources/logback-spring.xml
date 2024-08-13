@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <springProperty name="appName" scope="context" source="spring.application.name"/>
+    <springProperty name="logFileDir" scope="context" source="logback.logFileDir" defaultValue="./logs/${appName}"/>
+    <springProperty name="maxFileSize" scope="context" source="logback.maxFileSize" defaultValue="50MB"/>
+    <springProperty name="maxHistoryDay" scope="context" source="logback.maxHistoryDay" defaultValue="7"/>
+    <springProperty name="serverPort" scope="context" source="server.port" defaultValue="0000"/>
+    <!--
+        与logstash.conf配置文件中的输入源部分对应即可，logstash.conf的输入源配置形如：
+        input {
+            tcp {
+                 mode => "server"
+                 host => "127.0.0.1"
+                 port => 5044
+                 codec => json_lines
+            }
+        }
+     -->
+    <springProperty name="logstashEnable" scope="context" source="zoo.logging.logstash.enable" defaultValue="false"/>
+    <springProperty name="logstashHost" scope="context" source="zoo.logging.logstash.host" defaultValue="127.0.0.1"/>
+    <springProperty name="logstashPort" scope="context" source="zoo.logging.logstash.port" defaultValue="5044"/>
+    <springProperty name="pattern" scope="context" source="zoo.logging.pattern" defaultValue="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level ${appName} %thread %logger{50}:%L %msg%n"/>
+
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${pattern}</pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logFileDir}/${appName}.log</file>
+        <encoder>
+            <pattern>${pattern}</pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${logFileDir}/${appName}.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <MaxHistory>${maxHistoryDay}</MaxHistory>
+            <MaxFileSize>${maxFileSize}</MaxFileSize>
+        </rollingPolicy>
+    </appender>
+
+
+    <if condition='property("logstashEnable").equals("true")'>
+        <then>
+            <!--
+                往logstash传输日志
+                注：默认会将 日志相关信息、MDC内的所有值、property、springProperty等等都传输到logstash
+                更多详见：https://github.com/logfellow/logstash-logback-encoder
+            -->
+            <appender name="logstashAppender" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+                <destination>${logstashHost}:${logstashPort}</destination>
+                <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
+                    <customFields>{"application": "${appName}"}</customFields>
+                </encoder>
+            </appender>
+        </then>
+    </if>
+
+    <if condition='property("logstashEnable").equals("true")'>
+        <then>
+            <root level="INFO">
+                <appender-ref ref="consoleAppender"/>
+                <appender-ref ref="fileAppender"/>
+                <appender-ref ref="logstashAppender"/>
+            </root>
+        </then>
+        <else>
+            <root level="INFO">
+                <appender-ref ref="consoleAppender"/>
+                <appender-ref ref="fileAppender"/>
+            </root>
+        </else>
+    </if>
+</configuration>

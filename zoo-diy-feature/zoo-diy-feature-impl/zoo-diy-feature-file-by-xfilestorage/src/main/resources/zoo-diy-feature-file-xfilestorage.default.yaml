@@ -1,0 +1,49 @@
+zoo:
+  guide:
+    diy:
+      zoo-file-xfilestorage:
+        order: 1060
+        name: "zoo-diy-feature-file-by-xfilestorage"
+        instruction: |-
+          1.此组件提供文件对接能力支持
+        manual: |-
+          引入此组件后，你还需要引入对应实现的依赖：
+          1. 引入对应实现的依赖：
+          # 如果你使用的是minio
+          <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>8.5.2</version>
+          </dependency>
+          更多详见： https://x-file-storage.xuyanwu.cn/#/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8?id=%e9%85%8d%e7%bd%ae
+          2. 对具体实现进行对应配置：
+          # 如果你使用的是minio
+          dromara:
+            x-file-storage:
+              # 默认使用的存储平台
+              default-platform: ${dromara.x-file-storage.minio[0].platform}
+              # 默认缩略图后缀
+              thumbnail-suffix: ".min.jpg"
+              minio:
+                - enable-storage: true  # 启用存储
+                  platform: ?? # 自定义唯一标识
+                  access-key: ??
+                  secret-key: ??
+                  bucket-name: ?? # 存储桶，需先创建好（，需要的话，看情况设置文件访问策略Access Rules）
+                  # minio服务地址
+                  end-point: 'http://192.167.101.17:9000'
+                  # 用于生成文件url的域名，注意以"/"结尾
+                  domain: 'https://www.idea-aedi.com/file/{bucket-name}/'
+          更多详见： https://x-file-storage.xuyanwu.cn/#/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8?id=%e9%85%8d%e7%bd%ae
+        contacts:
+          - name: "作者邮箱"
+            value: "13548417409@163.com"
+        links:
+          - name: "官网"
+            value: "https://x-file-storage.xuyanwu.cn/#/"
+          - name: "配置"
+            value: "https://x-file-storage.xuyanwu.cn/#/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8?id=%e9%85%8d%e7%bd%ae"
+
+logging:
+  level:
+    org.dromara.x.file.storage.spring.FileStorageAutoConfiguration: error

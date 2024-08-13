@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.idea-aedi.zoo</groupId>
+        <artifactId>zoo-diy-feature</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>zoo-diy-feature-api</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>zoo-diy-feature-audit-log-api</module>
+        <module>zoo-diy-feature-bpmn-api</module>
+        <module>zoo-diy-feature-i18n-api</module>
+        <module>zoo-diy-feature-field-perm-api</module>
+        <module>zoo-diy-feature-reqresp-encdec-api</module>
+        <module>zoo-diy-feature-file-api</module>
+        <module>zoo-diy-feature-expression-engine-api</module>
+        <module>zoo-diy-feature-msg-api</module>
+        <module>zoo-diy-feature-config-api</module>
+        <module>zoo-diy-feature-lite-feature-api</module>
+    </modules>
+</project>

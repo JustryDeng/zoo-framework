@@ -1,0 +1,54 @@
+zoo:
+  guide:
+    diy:
+      zoo-logging-micrometer:
+        order: 0
+        name: "zoo-diy-artifact-logging-micrometer"
+        instruction: "此组件提供基于micrometer的日志记录能力，并作适应扩展"
+        manual: |-
+          1.此组件相关配置（全都非必填，都有默认值）。如：
+          zoo:
+            logging:
+              ## 指定日志格式（注：此字符串中的${xxx}会先被springboot解析后，再传给日志框架）
+              pattern: '%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level ${spring.application.name:} [%X{traceId},%X{spanId},%X{traceXd}] %thread %logger{50}:%L %msg%n'
+              ## 日志（通过tcp）往logstash中采集
+              #  此时logstash的配置文件logstash.conf中，输入源配置形如：
+              #  input {
+              #    tcp {
+              #      mode => "server"
+              #      host => "127.0.0.1"  # 0.0.0.0 表示不限制数据来源
+              #      port => 5044
+              #      codec => json_lines
+              #    }
+              #  }
+              logstash:
+                enable: false
+                host: 127.0.0.1
+                port: 5044
+        contacts:
+          - name: "作者邮箱"
+            value: "13548417409@163.com"
+        links:
+          - name: "micrometer官网"
+            value: "https://github.com/micrometer-metrics/micrometer"
+          - name: "OpenTelemetry官网"
+            value: "https://opentelemetry.io/"
+
+  logging:
+    # 指定日志格式（注：此字符串中的${xxx}会先被springboot解析后，再传给日志框架）
+    # MDC通过%X{}取值时，可使用【:-】来指定默认值，如：%X{key:-defaultValue}
+    pattern: '%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level ${spring.application.name:} [%X{traceXd}] %thread %logger{50}:%L %msg%n'
+    # 日志（通过tcp）往logstash中采集
+    #  此时logstash.conf的输入源配置示例：
+    #  input {
+    #    tcp {
+    #      mode => "server"
+    #      host => "127.0.0.1"  # 0.0.0.0 表示不限制数据来源
+    #      port => 5044
+    #      codec => json_lines
+    #    }
+    #  }
+    logstash:
+      enable: false
+      host: 127.0.0.1
+      port: 5044
